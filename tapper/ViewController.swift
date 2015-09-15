@@ -9,17 +9,69 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    // Properties
+    var maxTabs: Int = 0
+    var currentTabs: Int = 0
+    
+    // Outlets
+    @IBOutlet weak var logoImg: UIImageView!
+    @IBOutlet weak var howManyTabsTxt: UITextField!
+    @IBOutlet weak var playBtn: UIButton!
+    
+    @IBOutlet weak var tabBtn: UIButton!
+    @IBOutlet weak var tabLbl: UILabel!
+    
+    @IBAction func onCoinTapped(sender: UIButton!){
+        currentTabs++
+        updateTabsLbl()
+        
+        if gameOver() {
+            restartGame()
+        }
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func onPlayButtonPressed(sender: UIButton!){
+        
+        
+        if howManyTabsTxt.text != nil && howManyTabsTxt.text != "" {
+            logoImg.hidden = true
+            playBtn.hidden = true
+            howManyTabsTxt.hidden = true
+            tabBtn.hidden = false
+            tabLbl.hidden = false
+            maxTabs = Int(howManyTabsTxt.text!)!
+            currentTabs = 0
+            
+            updateTabsLbl()
+        }
     }
+    
+    func restartGame(){
+        maxTabs = 0
+        howManyTabsTxt.text = nil
+        logoImg.hidden = false
+        playBtn.hidden = false
+        howManyTabsTxt.hidden = false
+        tabBtn.hidden = true
+        tabLbl.hidden = true
+    }
+    
+    func updateTabsLbl(){
+        
+        tabLbl.text = "\(currentTabs) Taps"
+    }
+    
+    func gameOver()-> Bool{
+        if currentTabs >= maxTabs{
+            return true
+        } else {
+            return false
+        }
+    }
+    
 
+    
 
 }
 
